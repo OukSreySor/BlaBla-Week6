@@ -18,7 +18,7 @@ class PostScreen extends StatelessWidget {
         actions: [
           IconButton(
             // 2- Fetch the post
-            onPressed: () => {postProvider.fetchPost(45)},
+            onPressed: () => {postProvider.fetchPost()},
             icon: const Icon(Icons.update),
           ),
         ],
@@ -29,12 +29,12 @@ class PostScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(PostProvider courseProvider) {
-    final postValue = courseProvider.postValue;
+  Widget _buildBody(PostProvider postProvider) {
+    final postValue = postProvider.postValue;
 
-    if (postValue == null) {
-      return Text('Tap refresh to display post'); // display an empty state
-    }
+    // if (postValue == null) {
+    //   return Text('Tap refresh to display post'); // display an empty state
+    // }
 
     switch (postValue.state) {
       case AsyncValueState.loading:
@@ -44,11 +44,27 @@ class PostScreen extends StatelessWidget {
         return Text('Error: ${postValue.error}'); // display a error
 
       case AsyncValueState.success:
-        return PostCard(post: postValue.data!); // display the post
+        return PostList(posts: postValue.data!); // display the post
     }
   }
 }
 
+class PostList extends StatelessWidget {
+  const PostList({super.key, required this.posts});
+
+  final List<Post> posts;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: posts.length,
+      itemBuilder: (context, index) {
+        final post = posts[index];
+        return PostCard(post: post); // display individual post card
+      },
+    );
+  }
+}
 class PostCard extends StatelessWidget {
   const PostCard({super.key, required this.post});
 

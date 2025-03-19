@@ -1,8 +1,8 @@
+
+import 'package:blabla_week6/EX-1-START-CODE/provider/courses_provider.dart';
+import 'package:blabla_week6/EX-1-START-CODE/repositories/courses_mock_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'provider/courses_provider.dart';
-import 'repositories/courses_mock_repository.dart';
 import 'screens/course_list_screen.dart';
 
 void main() {
