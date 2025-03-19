@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/course.dart';
+import '../models/course_model.dart';
 
 const Color mainColor = Colors.blue;
 
@@ -33,7 +33,7 @@ class _CourseScoreFormState extends State<CourseScoreForm> {
       _formKey.currentState!.save();
       Navigator.of(
         context,
-      ).pop(CourseScore(studentName: _enteredName, studenScore: _enteredScore));
+      ).pop(CourseScore(studentName: _enteredName, studentScore: _enteredScore));
     }
   }
 

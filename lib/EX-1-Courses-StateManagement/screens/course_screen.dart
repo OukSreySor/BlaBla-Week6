@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
-import '../models/course.dart';
+import '../models/course_model.dart';
+import '../provider/courses_provider.dart';
 import 'course_score_form.dart';
 
 class CourseScreen extends StatefulWidget {
-  const CourseScreen({super.key, required this.course});
+  const CourseScreen({super.key, required this.courseId, required this.coursesProvider});
 
-  final Course course;
+  final String courseId;
+  final CoursesProvider coursesProvider;
 
   @override
   State<CourseScreen> createState() => _CourseScreenState();
 }
 
 class _CourseScreenState extends State<CourseScreen> {
-  List<CourseScore> get scores => widget.course.scores;
+
+  List<CourseScore> get scores => widget.coursesProvider.getCoursesFor(widget.courseId).scores;
 
   void _addScore() async {
-    CourseScore? newSCore = await Navigator.of(context).push<CourseScore>(
+    CourseScore? newScore = await Navigator.of(context).push<CourseScore>(
       MaterialPageRoute(builder: (ctx) => const CourseScoreForm()),
     );
 
-    if (newSCore != null) {
+    if (newScore != null) {
       setState(() {
-        scores.add(newSCore);
+        widget.coursesProvider.addScore(widget.courseId, newScore);
       });
     }
+ 
   }
 
   Color scoreColor(double score) {
@@ -41,9 +45,9 @@ class _CourseScreenState extends State<CourseScreen> {
             (ctx, index) => ListTile(
               title: Text(scores[index].studentName),
               trailing: Text(
-                scores[index].studenScore.toString(),
+                scores[index].studentScore.toString(),
                 style: TextStyle(
-                  color: scoreColor(scores[index].studenScore),
+                  color: scoreColor(scores[index].studentScore),
                   fontSize: 15,
                 ),
               ),
@@ -56,7 +60,7 @@ class _CourseScreenState extends State<CourseScreen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
-          widget.course.name,
+          widget.courseId,
           style: const TextStyle(color: Colors.white),
         ),
         actions: [
