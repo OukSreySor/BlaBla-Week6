@@ -8,7 +8,7 @@ class PostProvider extends ChangeNotifier {
   final PostRepository _repository;
 
   // change to list
-  AsyncValue<List<Post>> postValue = AsyncValue.loading();
+  AsyncValue<List<Post>>? postValue;
 
   PostProvider({required PostRepository repository}) : _repository = repository;
 

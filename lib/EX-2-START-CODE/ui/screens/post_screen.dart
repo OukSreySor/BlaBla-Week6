@@ -32,9 +32,9 @@ class PostScreen extends StatelessWidget {
   Widget _buildBody(PostProvider postProvider) {
     final postValue = postProvider.postValue;
 
-    // if (postValue == null) {
-    //   return Text('Tap refresh to display post'); // display an empty state
-    // }
+    if (postValue == null) {
+      return Text('Tap refresh to display post'); // display an empty state
+    }
 
     switch (postValue.state) {
       case AsyncValueState.loading:
